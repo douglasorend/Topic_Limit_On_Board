@@ -3,7 +3,7 @@
 <modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
 <id>Dougiefresh:TopicLimit</id>
 <name>Topic Limit On Board</name>
-<version>1.1</version>
+<version>1.2</version>
 
 <!-------------------------------------------------------------------------->
 <!-- Source file changes                                                  -->
@@ -67,9 +67,8 @@
 <file name="$sourcedir/Subs-Boards.php">
 	<!-- getBoardTree function -->
 	<operation>
-		<search position="before"><![CDATA[b.num_posts, b.num_topics, b.deny_member_groups, c.id_cat, c.name AS cat_name, c.description AS cat_desc, c.cat_order, c.can_collapse]]></search>
-		<add><![CDATA[,
-			b.topic_limit, b.topic_limit_time]]></add>
+		<search position="before"><![CDATA[b.id_board, b.name AS board_name, b.description,]]></search>
+		<add><![CDATA[ b.topic_limit, b.topic_limit_time,]]></add>
 	</operation>
 	<operation>
 		<search position="before"><![CDATA['prev_board' => $prevBoard]]></search>

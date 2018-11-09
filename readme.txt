@@ -1,5 +1,5 @@
 [hr]
-[center][color=red][size=16pt][b]TOPIC LIMIT ON BOARD v1.1[/b][/size][/color]
+[center][color=red][size=16pt][b]TOPIC LIMIT ON BOARD v1.2[/b][/size][/color]
 [url=http://www.simplemachines.org/community/index.php?action=profile;u=253913][b]By Dougiefresh[/b][/url] -> [url=http://custom.simplemachines.org/mods/index.php?mod=4134]Link to Mod[/url]
 [/center]
 [hr]
@@ -13,7 +13,7 @@ In the [b]Admin[/b] => [b]Forum[/b] => [b]Boards[/b] area, click on the [b]Modif
 > [b]Limit Topics on this Board during[/b] (number of days)
 
 [color=blue][b][size=12pt][u]Compatibility Notes[/u][/size][/b][/color]
-This mod was tested on SMF 2.0.12, but should work on SMF 2.0 and up, as well as SMF 2.1 Beta 2.  SMF 1.x is not and will not be supported.  
+This mod was tested on SMF 2.0.12, but should work on SMF 2.0 and up, as well as SMF 2.1 Beta 3.  SMF 2.1 Beta 1, Beta 2, and SMF 1.x will not be supported.
 
 [color=blue][b][size=12pt][u]Changelog[/u][/size][/b][/color]
 The changelog has been removed and can be seen at [url=http://www.xptsp.com/board/index.php?topic=754.msg1270#msg1270]XPtsp.com[/url].
