@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+<id>Dougiefresh:TopicLimit</id>
+<name>Topic Limit On Board</name>
+<version>1.3</version>
+
+<!-------------------------------------------------------------------------->
+<!-- Language file edits (Spanish Latin - Rock Lee)                       -->
+<!-------------------------------------------------------------------------->
+<file name="$languagedir/ManageBoards.spanish_latin.php" error="skip">
+	<operation>
+		<search position="end" />
+		<add><![CDATA[
+$txt['mboards_limit_topics'] = 'Limite de temas en este foro es ';
+$txt['mboards_limit_topics_desc'] = 'Sobre el periodo de tiempo designado (abajo)';
+$txt['mboards_limit_topics_time'] = 'Limitar temas en este foro durante';
+]]></add>
+	</operation>
+</file>
+<file name="$languagedir/ManageBoards.spanish_latin-utf8.php" error="skip">
+	<operation>
+		<search position="end" />
+		<add><![CDATA[
+$txt['mboards_limit_topics'] = 'Limite de temas en este foro es ';
+$txt['mboards_limit_topics_desc'] = 'Sobre el periodo de tiempo designado (abajo)';
+$txt['mboards_limit_topics_time'] = 'Limitar temas en este foro durante';
+]]></add>
+	</operation>
+</file>
+<file name="$languagedir/Post.spanish_latin.php" error="skip">
+	<operation>
+		<search position="end" />
+		<add><![CDATA[
+$txt['topic_limit_exceeded1'] = 'Solo se te permite publicar %d temas dentro del per&iacute;odo de %d d&iacute;as en este foro.';
+$txt['topic_limit_exceeded2'] = 'Solo se te permite publicar 1 tema dentro de %d d&iacute;a(s) en este foro.';
+]]></add>
+	</operation>
+<file name="$languagedir/Post.spanish_latin-utf8.php" error="skip">
+	<operation>
+		<search position="end" />
+		<add><![CDATA[
+$txt['topic_limit_exceeded1'] = 'Solo se te permite publicar %d temas dentro del período de %d días en este foro.';
+$txt['topic_limit_exceeded2'] = 'Solo se te permite publicar 1 tema dentro de %d día(s) en este foro.';
+]]></add>
+	</operation>
+</file>
+</modification>
