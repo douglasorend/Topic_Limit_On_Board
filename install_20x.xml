@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+<id>Dougiefresh:TopicLimit</id>
+<name>Topic Limit On Board</name>
+<version>1.0</version>
+
+<!-------------------------------------------------------------------------->
+<!-- Source file changes                                                  -->
+<!-------------------------------------------------------------------------->
+<file name="$sourcedir/Load.php">
+	<!-- loadBoard function -->
+	<operation>
+		<search position="before"><![CDATA[(!empty($topic) ? ', t.approved, t.id_member_started' : '') . ']]></search>
+		<add><![CDATA[,
+				b.topic_limit, b.topic_limit_time]]></add>
+	</operation>
+	<operation>
+		<search position="before"><![CDATA['cur_topic_starter' => empty($topic) ? 0 : $row['id_member_started'],]]></search>
+		<add><![CDATA[
+				'topic_limit' => $row['topic_limit'],
+				'topic_limit_time' => $row['topic_limit_time'],]]></add>
+	</operation>
+</file>
+<file name="$sourcedir/ManageBoards.php">
+	<!-- EditBoard2 function -->
+	<operation>
+		<search position="after"><![CDATA[// Create a new board...]]></search>
+		<add><![CDATA[// Topic limiting information:
+		$boardOptions['topic_limit'] = $_POST['topic_limit'];
+		$boardOptions['topic_limit_time'] = $_POST['topic_limit_time'];
+
+		]]></add>
+	</operation>
+</file>
+<file name="$sourcedir/Post.php">
+	<!-- Post function -->
+	<operation>
+		<search position="before"><![CDATA[$context['sticky'] = !empty($_REQUEST['sticky']);]]></search>
+		<add><![CDATA[
+
+		// Are we limiting number of topics within a certain period on this board?
+		if (!empty($board_info['topic_limit']) && !empty($board_info['topic_limit_time']))
+		{
+			$request = $smcFunc['db_query']('', '
+				SELECT COUNT(t.id_topic) AS count
+				FROM {db_prefix}topics AS t
+					LEFT JOIN {db_prefix}messages AS m ON (m.id_msg = t.id_first_msg)
+				WHERE t.id_board = {int:id_board}
+					AND m.poster_time > {int:time}
+					AND m.id_member = {int:id_member}',
+				array(
+					'id_board' => (int) $board,
+					'time' => time() - $board_info['topic_limit_time'] * 86400,
+					'id_member' => (int) $user_info['id'],
+				)
+			);
+			list($count) = $smcFunc['db_fetch_row']($request);
+			$smcFunc['db_free_result']($request);
+			if ($count >= $board_info['topic_limit'] && $board_info['topic_limit'] > 1)
+				fatal_error(sprintf($txt['topic_limit_exceeded1'], $board_info['topic_limit'], $board_info['topic_limit_time']), false);
+			elseif ($count >= $board_info['topic_limit'])
+				fatal_error(sprintf($txt['topic_limit_exceeded2'], $board_info['topic_limit_time']), false);
+		}]]></add>
+	</operation>
+</file>
+<file name="$sourcedir/Subs-Boards.php">
+	<!-- getBoardTree function -->
+	<operation>
+		<search position="before"><![CDATA[b.num_posts, b.num_topics, c.id_cat, c.name AS cat_name, c.cat_order, c.can_collapse]]></search>
+		<add><![CDATA[,
+			b.topic_limit, b.topic_limit_time]]></add>
+	</operation>
+	<operation>
+		<search position="before"><![CDATA['prev_board' => $prevBoard]]></search>
+		<add><![CDATA[,
+				'topic_limit' => $row['topic_limit'],
+				'topic_limit_time' => $row['topic_limit_time'],]]></add>
+	</operation>
+	
+	<!-- modifyBoard function -->
+	<operation>
+		<search position="after"><![CDATA[// Do the updates (if any).]]></search>
+		<add><![CDATA[if (isset($boardOptions['topic_limit']))
+	{
+		$boardUpdates[] = 'topic_limit = {int:topic_limit}';
+		$boardUpdateParameters['topic_limit'] = (int) $boardOptions['topic_limit'];
+	}
+	if (isset($boardOptions['topic_limit_time']))
+	{
+		$boardUpdates[] = 'topic_limit_time = {int:topic_limit_time}';
+		$boardUpdateParameters['topic_limit_time'] = (int) $boardOptions['topic_limit_time'];
+	}
+
+	]]></add>
+	</operation>
+</file>
+
+<!-------------------------------------------------------------------------->
+<!-- Template file changes                                                -->
+<!-------------------------------------------------------------------------->
+<file name="$themedir/ManageBoards.template.php">
+	<!-- template_modify_board function -->
+	<operation>
+		<search position="after"><![CDATA[// Here the user can choose to force this board to use a theme other than the default theme for the forum.]]></search>
+		<add><![CDATA[// Here the user can limit the number of topics over a certain period of time:
+	echo '
+					<div id="limit_topics_div">
+						<dl class="settings">
+							<dt>
+								<strong>', $txt['mboards_limit_topics'], ':</strong><br />
+								<span class="smalltext">', $txt['mboards_limit_topics_desc'], '</span><br />
+							</dt>
+							<dd>
+								<input type="text" name="topic_limit" id="topic_limit" value="', $context['board']['topic_limit'], '" size="10" class="input_text" /> ', $txt['topics'], '
+							</dd>
+							<dt>
+								<strong>', $txt['mboards_limit_topics_time'], ':</strong><br />
+							</dt>
+							<dd>
+								<input type="text" name="topic_limit_time" id="topic_limit_time" value="', $context['board']['topic_limit_time'], '" size="10" class="input_text" /> ', $txt['days_word'], '
+							</dd>
+						</dl>
+					</div>';
+	
+	]]></add>
+	</operation>
+</file>
+</modification>

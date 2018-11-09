@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+<id>Dougiefresh:TopicLimit</id>
+<name>Topic Limit On Board</name>
+<version>1.0</version>
+
+<file name="$languagedir/ManageBoards.english.php">
+	<operation>
+		<search position="end" />
+		<add><![CDATA[
+$txt['mboards_limit_topics'] = 'Limit Topics on this Board to';
+$txt['mboards_limit_topics_desc'] = 'over designated period of time (below)';
+$txt['mboards_limit_topics_time'] = 'Limit Topics on this Board during';
+]]></add>
+	</operation>
+</file>
+<file name="$languagedir/Post.english.php">
+	<operation>
+		<search position="end" />
+		<add><![CDATA[
+$txt['topic_limit_exceeded1'] = 'You are only permitted to post %d topics within a %d day period on this board.';
+$txt['topic_limit_exceeded2'] = 'You are only permitted to post 1 topic within a %d day period on this board.';
+]]></add>
+	</operation>
+</file>
+</modification>
