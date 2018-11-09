@@ -67,7 +67,7 @@
 <file name="$sourcedir/Subs-Boards.php">
 	<!-- getBoardTree function -->
 	<operation>
-		<search position="before"><![CDATA[b.num_posts, b.num_topics, c.id_cat, c.name AS cat_name, c.cat_order, c.can_collapse]]></search>
+		<search position="before"><![CDATA[b.num_posts, b.num_topics, b.deny_member_groups, c.id_cat, c.name AS cat_name, c.description AS cat_desc, c.cat_order, c.can_collapse]]></search>
 		<add><![CDATA[,
 			b.topic_limit, b.topic_limit_time]]></add>
 	</operation>
